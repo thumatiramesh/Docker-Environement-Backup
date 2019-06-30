@@ -1,0 +1,123 @@
+version: '3.5'
+
+services:
+
+  volumerize:
+    image: blacklabelops/volumerize
+    restart: always
+    networks:
+      - web
+    env_file:
+     - ./.env
+    labels:
+      - volumerize
+    environment:
+      - "VOLUMERIZE_SOURCE=/source"
+      - "VOLUMERIZE_TARGET=gdocs://${GOOGLE_EMAIL}/backup"
+      - "GOOGLE_DRIVE_ID=${GOOGLE_DRIVE_ID}"
+      - "GOOGLE_DRIVE_SECRET=${GOOGLE_DRIVE_SECRET}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-tmp-data:/source/traefik:ro
+      - portainer-data:/source/portainer:ro
+      - elasticsearch-data:/source/elasticsearch:ro
+      - odoo-addons:/source/odoo-addons:ro
+      - odoo-config:/source/odoo-config:ro
+      - odoo-data:/source/odoo-data:ro
+      - odoo-postgres-data:/source/odoo-postgres-data:ro
+      - odoo2-addons:/source/odoo2-addons:ro
+      - odoo2-config:/source/odoo2-config:ro
+      - odoo2-data:/source/odoo2-data:ro
+      - odoo2-postgres-data:/source/odoo2-postgres-data:ro
+      - rocketchat-uploads:/source/rocketchat-uploads:ro
+      - rocketchat-mongo-data:/source/rocketchat-mongo-data:ro
+      - rocketchat-mongo-config:/source/rocketchat-mongo-config:ro
+      - rocketchat-mongo-init-replica-data:/source/rocketchat-mongo-init-replica-data:ro
+      - rocketchat-mongo-init-replica-config:/source/rocketchat-mongo-init-replica-config:ro
+      - wikijs-postgres-data:/source/wikijs-postgres-data:ro
+      - jenkins-data:/source/jenkins-data:ro
+      - restyaboard-media:/source/restyaboard-media:ro
+      - wekan-data:/source/wekan-data:ro
+      - wekan-data-dump:/source/wekan-data-dump:ro
+      - wekan-mongo-config:/source/wekan-mongo-config:ro
+      - volumerize-credentials:/credentials
+      - volumerize-cache-volume:/volumerize-cache
+    container_name: volumerize
+
+# -------------------  Volumes + Network ----------------- #
+volumes:
+  volumerize-credentials:
+  volumerize-cache-volume:
+  traefik-tmp-data:
+    external: true
+    name: services_traefik-tmp-data
+  portainer-data:
+    external: true
+    name: services_portainer-data
+  elasticsearch-data:
+    external: true
+    name: services_elasticsearch-data
+  odoo-addons:
+    external: true
+    name: services_odoo-addons
+  odoo-config:
+    external: true
+    name: services_odoo-config
+  odoo-data:
+    external: true
+    name: services_odoo-data
+  odoo2-addons:
+    external: true
+    name: services_odoo2-addons
+  odoo2-config:
+    external: true
+    name: services_odoo2-config
+  odoo2-data:
+    external: true
+    name: services_odoo2-data
+  odoo-postgres-data:
+    external: true
+    name: services_odoo-postgres-data
+  odoo2-postgres-data:
+    external: true
+    name: services_odoo2-postgres-data
+  rocketchat-uploads:
+    external: true
+    name: services_rocketchat-uploads
+  rocketchat-mongo-data:
+    external: true
+    name: services_rocketchat-mongo-data
+  rocketchat-mongo-config:
+    external: true
+    name: services_rocketchat-mongo-config
+  rocketchat-mongo-init-replica-data:
+    external: true
+    name: services_rocketchat-mongo-init-replica-data
+  rocketchat-mongo-init-replica-config:
+    external: true
+    name: services_rocketchat-mongo-init-replica-config
+  wikijs-postgres-data:
+    external: true
+    name: services_wikijs-postgres-data
+  jenkins-data:
+    external: true
+    name: services_jenkins-data
+  restyaboard-media:
+    external: true
+    name: services_restyaboard-media
+  restyaboard-postgres-data:
+    external: true
+    name: services_restyaboard-postgres-data
+  wekan-data:
+    external: true
+    name: services_wekan-data
+  wekan-data-dump:
+    external: true
+    name: services_wekan-data-dump
+  wekan-mongo-config:
+    external: true
+    name: services_wekan-mongo-config
+
+networks:
+  web:
+    external: true
