@@ -21,6 +21,7 @@ services:
       - traefik-tmp-data:/source/traefik:ro
       - portainer-data:/source/portainer:ro
       - elasticsearch-data:/source/elasticsearch:ro
+      - elasticsearch-snapshots:/source/elasticsearch-snapshots:ro
       - odoo-addons:/source/odoo-addons:ro
       - odoo-config:/source/odoo-config:ro
       - odoo-data:/source/odoo-data:ro
@@ -57,6 +58,9 @@ volumes:
   elasticsearch-data:
     external: true
     name: services_elasticsearch-data
+  elasticsearch-snapshots:
+    external: true
+    name: services_elasticsearch-snapshots
   odoo-addons:
     external: true
     name: services_odoo-addons
