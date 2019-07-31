@@ -38,6 +38,7 @@ services:
       - wikijs-postgres-data:/source/wikijs-postgres-data:ro
       - jenkins-data:/source/jenkins-data:ro
       - restyaboard-media:/source/restyaboard-media:ro
+      - restyaboard-postgres-data:/source/restyaboard-postgres-data:ro
       - wekan-data:/source/wekan-data:ro
       - wekan-data-dump:/source/wekan-data-dump:ro
       - wekan-mongo-config:/source/wekan-mongo-config:ro
